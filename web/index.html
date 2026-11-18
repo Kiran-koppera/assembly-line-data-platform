@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assembly Line Data Platform</title>
+<meta name="description" content="Data reliability for a simulated general-assembly line: PostgreSQL ingestion, dbt models and tests, monitoring, fault drills and SQL optimization.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap bar-in">
+    <span class="brand"><i aria-hidden="true"></i>Assembly Line Data Platform</span>
+    <nav>
+      <a href="#line">Line</a><a href="#stations">Stations</a><a href="#reliability">Reliability</a>
+      <a href="#sql">SQL</a><a href="#pipeline">Pipeline</a><a href="dbt-docs/">dbt docs</a>
+      <a class="gh" href="https://github.com/Kiran-koppera/assembly-line-data-platform">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">General assembly · data reliability</div>
+    <h1>From station events to trusted line KPIs</h1>
+    <p>A simulated 40-station general-assembly line at 60-second takt sends PLC, torque, stoppage, quality and end-of-line events. They are ingested into PostgreSQL, modelled and tested with dbt, monitored for data faults and served here. <b>All data is simulated.</b></p>
+    <p class="meta" id="meta"></p>
+  </section>
+
+  <section class="kpis" id="kpis" aria-label="Key figures"></section>
+
+  <section class="card" id="line">
+    <div class="head"><div><h2>Throughput per hour</h2><p>Vehicles leaving the last station against the 60-per-hour target. Dips are breaks and stoppages.</p></div></div>
+    <div id="chart" class="chart"></div>
+  </section>
+
+  <section class="card" id="stations">
+    <div class="head"><div><h2>Stations</h2><p>Dwell time includes time blocked by the next station. Highest p95 first: the likely bottleneck.</p></div>
+      <label class="sel">Day <select id="day"></select></label></div>
+    <div class="tw"><table id="tbl-stations"></table></div>
+  </section>
+
+  <section class="card" id="reliability">
+    <div class="head"><div><h2>Fault drills</h2><p>Each fault is injected into a clean simulated day; the pipeline must flag it, and nothing else.</p></div><span class="pill" id="drill-pill"></span></div>
+    <div class="tw"><table id="tbl-drills" class="drills"></table></div>
+  </section>
+
+  <section class="grid2">
+    <div class="card">
+      <div class="head"><div><h2>Torque capability</h2><p>Lowest Cpk joints (first attempts). 1.33 is a common minimum.</p></div></div>
+      <div class="tw short"><table id="tbl-torque"></table></div>
+    </div>
+    <div class="card">
+      <div class="head"><div><h2>Incidents from the latest run</h2><p>Monitoring checks on the data behind this page.</p></div></div>
+      <ul class="incidents" id="incidents"></ul>
+    </div>
+  </section>
+
+  <section class="card" id="sql">
+    <div class="head"><div><h2>SQL optimization</h2><p id="bench-sub"></p></div></div>
+    <div class="tw"><table id="tbl-bench"></table></div>
+  </section>
+
+  <section class="card" id="pipeline">
+    <div class="head"><div><h2>Ingestion batches</h2><p>Re-running a load skips unchanged files; re-sent events are dropped by the primary key; contract violations go to quarantine.</p></div></div>
+    <div class="tw"><table id="tbl-batches"></table></div>
+  </section>
+</main>
+<footer class="wrap foot">Simulated data. Not affiliated with any vehicle manufacturer. Code MIT.</footer>
+<script src="app.js"></script>
+</body>
+</html>
