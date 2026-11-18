@@ -1,0 +1,46 @@
+{
+  "rows": 1056518,
+  "runs_per_query": 7,
+  "params": {
+    "day": "2026-11-17",
+    "vin": "SIM000000501"
+  },
+  "queries": [
+    {
+      "query": "hourly_throughput",
+      "description": "Vehicles leaving the line per hour on one day",
+      "before_ms": 4.13,
+      "before_scan": "Seq Scan",
+      "after_ms": 0.39,
+      "after_scan": "Bitmap Heap Scan",
+      "speedup": 10.6
+    },
+    {
+      "query": "station_dwell",
+      "description": "Median and p95 dwell time at one station over a day",
+      "before_ms": 5.26,
+      "before_scan": "Seq Scan",
+      "after_ms": 0.85,
+      "after_scan": "Bitmap Heap Scan",
+      "speedup": 6.2
+    },
+    {
+      "query": "torque_joint_week",
+      "description": "Mean, spread and NOK count for one torque joint over the whole week",
+      "before_ms": 30.95,
+      "before_scan": "Seq Scan",
+      "after_ms": 3.92,
+      "after_scan": "Bitmap Heap Scan",
+      "speedup": 7.9
+    },
+    {
+      "query": "vehicle_history",
+      "description": "Full event history of one vehicle (troubleshooting lookup)",
+      "before_ms": 26.3,
+      "before_scan": "Seq Scan",
+      "after_ms": 0.03,
+      "after_scan": "Index Scan",
+      "speedup": 876.7
+    }
+  ]
+}
