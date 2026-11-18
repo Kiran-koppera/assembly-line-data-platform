@@ -8,7 +8,7 @@ postmortems, and measured SQL optimization.**
 
 [![CI](https://github.com/Kiran-koppera/assembly-line-data-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/Kiran-koppera/assembly-line-data-platform/actions/workflows/ci.yml)
 [![Deploy](https://github.com/Kiran-koppera/assembly-line-data-platform/actions/workflows/deploy.yml/badge.svg)](https://github.com/Kiran-koppera/assembly-line-data-platform/actions/workflows/deploy.yml)
-![Coverage 87%](https://img.shields.io/badge/coverage-87%25-0b6bcb)
+![Coverage 86%](https://img.shields.io/badge/coverage-86%25-0b6bcb)
 ![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-0b6bcb)
 ![dbt](https://img.shields.io/badge/dbt-1.10-0b6bcb)
 
@@ -40,7 +40,7 @@ KPIs trustworthy, then proves the checks work by breaking the data on purpose.
 | Monitoring | **8 checks** across stations and time; a clean 3-day run raises **0 incidents** |
 | Fault drills | **7 of 7 injected faults detected, 0 false alarms** (8/8 scenarios pass) |
 | SQL optimization | **6× to 877× faster** queries after three targeted indexes (median of 7 EXPLAIN ANALYZE runs) |
-| Engineering | 14 tests on a real PostgreSQL (87 % coverage), CI on Python 3.11/3.12, deploy builds everything from scratch |
+| Engineering | 14 tests on a real PostgreSQL (86 % coverage in CI), CI on Python 3.11/3.12, deploy builds everything from scratch |
 
 ### Fault drills
 
