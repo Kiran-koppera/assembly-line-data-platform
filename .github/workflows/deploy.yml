@@ -1,0 +1,60 @@
+name: Build and deploy dashboard
+
+# Rebuilds the whole platform on a fresh PostgreSQL: fault drills (must all pass), a 3-day run,
+# dbt docs and the dashboard, then publishes to GitHub Pages. Benchmarks come from the committed
+# output/benchmarks.json (measured locally, see docs/benchmarks.md).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Fault drills (fail the build if any is missed)
+        run: python -m assembly drills
+      - name: Pipeline run, 3 simulated days
+        run: python -m assembly run --days 3
+      - name: Export dashboard and dbt docs
+        run: |
+          python -m assembly export
+          python -m assembly docs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
