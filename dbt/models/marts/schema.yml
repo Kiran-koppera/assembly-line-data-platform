@@ -1,0 +1,32 @@
+version: 2
+models:
+  - name: fct_hourly_throughput
+    description: Vehicles completed per hour (last station exit) against the takt-based target. Dashboard tile "Throughput".
+    columns:
+      - name: hour
+        tests: [unique, not_null]
+      - name: vehicles
+        tests:
+          - within_range: {arguments: {min_value: 0, max_value: 120}}
+  - name: fct_station_daily
+    description: Per station and day. Dwell time = time between station entry and exit, including time blocked by the next station. Dashboard table "Stations".
+    tests:
+      - dbt_utils_unique_combination: {arguments: {columns: [station_id, day]}}
+    columns:
+      - name: station_id
+        tests:
+          - relationships: {arguments: {to: ref('dim_station'), field: station_id}}
+      - name: p50_dwell_s
+        tests:
+          - within_range: {arguments: {min_value: 0, max_value: 3600}}
+  - name: fct_first_pass_yield
+    description: Share of vehicles passing all end-of-line tests on the first attempt, per day. Dashboard tile "First-pass yield".
+    columns:
+      - name: first_pass_yield
+        tests:
+          - within_range: {arguments: {min_value: 0, max_value: 1}}
+  - name: fct_torque_capability
+    description: Torque process capability (Cpk) and NOK rate per joint and day. Dashboard table "Torque".
+    columns:
+      - name: cpk
+        description: min(USL - mean, mean - LSL) / 3σ on first attempts.

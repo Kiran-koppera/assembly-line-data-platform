@@ -1,0 +1,41 @@
+station_id,sequence,zone,station_name,base_cycle_s,joints,is_quality_gate,eol_test,takt_s
+T01,1,Trim,Door removal,40.8,0,false,,60.0
+T02,2,Trim,Wiring harness main,45.9,0,false,,60.0
+T03,3,Trim,Wiring harness rear,44.2,0,false,,60.0
+T04,4,Trim,Sound insulation,39.9,0,false,,60.0
+T05,5,Trim,Headliner,42.5,0,false,,60.0
+T06,6,Trim,Instrument panel install,47.6,3,false,,60.0
+T07,7,Trim,HVAC module,43.4,1,false,,60.0
+T08,8,Trim,Carpet and console,41.6,0,false,,60.0
+T09,9,Trim,Glass prep,39.1,0,false,,60.0
+T10,10,Trim,Windshield install,48.4,0,false,,60.0
+T11,11,Trim,Rear glass install,45.0,0,false,,60.0
+T12,12,Trim,Trim quality gate,38.2,0,true,,60.0
+C01,13,Chassis,Rear drive unit sub-assembly,44.2,2,false,,60.0
+C02,14,Chassis,Front suspension,45.0,2,false,,60.0
+C03,15,Chassis,Rear suspension,45.9,2,false,,60.0
+C04,16,Chassis,Brake lines,42.5,1,false,,60.0
+C05,17,Chassis,Marriage: body to chassis,49.3,4,false,,60.0
+C06,18,Chassis,Battery pack install,48.4,4,false,,60.0
+C07,19,Chassis,Underbody shields,39.9,1,false,,60.0
+C08,20,Chassis,Exhaust-free cooling loop,42.5,1,false,,60.0
+C09,21,Chassis,Wheels and tyres,46.8,2,false,,60.0
+C10,22,Chassis,Chassis quality gate,38.2,0,true,,60.0
+F01,23,Final,Doors re-hang,47.6,2,false,,60.0
+F02,24,Final,Front seats,44.2,2,false,,60.0
+F03,25,Final,Rear seats,41.6,1,false,,60.0
+F04,26,Final,Bumpers front,42.5,0,false,,60.0
+F05,27,Final,Bumpers rear,42.5,0,false,,60.0
+F06,28,Final,Lighting,40.8,0,false,,60.0
+F07,29,Final,Coolant and brake fill,48.4,0,false,,60.0
+F08,30,Final,Refrigerant fill,45.9,0,false,,60.0
+F09,31,Final,Washer fluid and 12V,39.1,0,false,,60.0
+F10,32,Final,Software flash,46.8,0,false,,60.0
+F11,33,Final,Interior finish,39.9,0,false,,60.0
+F12,34,Final,Final quality gate,38.2,0,true,,60.0
+E01,35,EOL,Wheel alignment,47.6,0,false,alignment,60.0
+E02,36,EOL,Headlamp aim,37.4,0,false,headlamp,60.0
+E03,37,EOL,Rolling road,49.3,0,false,dyno,60.0
+E04,38,EOL,Water test,46.8,0,false,water,60.0
+E05,39,EOL,ADAS calibration,45.0,0,false,adas,60.0
+E06,40,EOL,Final inspection,42.5,0,true,final_inspection,60.0

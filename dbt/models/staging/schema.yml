@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: stg_station_events
+    description: PLC entry and exit signals per vehicle and station.
+    columns:
+      - name: event_id
+        tests: [unique, not_null]
+      - name: vin
+        tests: [not_null]
+      - name: station_id
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('dim_station'), field: station_id}}
+  - name: stg_torque_results
+    description: One row per tightening attempt; a NOK result is retightened once.
+    columns:
+      - name: event_id
+        tests: [unique, not_null]
+      - name: torque_nm
+        description: Measured torque in newton metres.
+        tests:
+          - not_null
+          - within_range: {arguments: {min_value: 0, max_value: 400}}
+      - name: result
+        tests:
+          - accepted_values: {arguments: {values: [OK, NOK]}}
+  - name: stg_andon_events
+    description: Stoppage start and end signals.
+    columns:
+      - name: andon_id
+        tests: [not_null]
+  - name: stg_quality_checks
+    description: Zone quality gates (pass/fail with defect code).
+    columns:
+      - name: result
+        tests:
+          - accepted_values: {arguments: {values: [pass, fail]}}
+  - name: stg_eol_tests
+    description: End-of-line tests; retests happen after off-line rework.
+    columns:
+      - name: result
+        tests:
+          - accepted_values: {arguments: {values: [pass, fail]}}

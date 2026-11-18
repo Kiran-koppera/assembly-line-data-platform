@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: int_station_visits
+    description: One row per vehicle and station.
+    columns:
+      - name: dwell_s
+        description: Seconds between entry and exit. Must not be negative.
+        tests:
+          - within_range: {arguments: {min_value: 0, max_value: 86400}}
+  - name: int_vehicle_journey
+    description: One row per vehicle with line entry and exit.
+    columns:
+      - name: vin
+        tests: [unique, not_null]
+  - name: int_andon_intervals
+    description: Stoppage intervals.
+    columns:
+      - name: andon_id
+        tests: [unique]

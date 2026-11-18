@@ -1,0 +1,15 @@
+version: 2
+sources:
+  - name: raw
+    description: Events landed by the ingestion job (see src/assembly/ingest.py). One row per event, deduplicated by event_id.
+    tables:
+      - name: events
+        description: All line events, partitioned by day. Payload fields that are not part of the envelope live in `payload` (jsonb).
+        columns:
+          - name: event_id
+            description: Event UUID assigned by the sending system; re-sent events keep the same id.
+          - name: event_type
+            tests:
+              - accepted_values:
+                  arguments:
+                    values: [station_in, station_out, torque_result, andon_start, andon_end, quality_check, eol_test, eol_retest]
