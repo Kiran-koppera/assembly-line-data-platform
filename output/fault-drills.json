@@ -1,0 +1,151 @@
+[
+  {
+    "scenario": "baseline",
+    "description": "Clean day, no fault (measures false alarms)",
+    "expected": [],
+    "fired": [],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [],
+    "seconds": 8.3
+  },
+  {
+    "scenario": "clock_drift",
+    "description": "F07's PLC clock jumps 3 minutes ahead at 10:00 and stays wrong.",
+    "expected": [
+      "clock_skew"
+    ],
+    "fired": [
+      "clock_skew"
+    ],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "F07: median transfer +180 s, 0.0% negative",
+      "F08: median transfer -180 s, 58.2% negative"
+    ],
+    "seconds": 8.4
+  },
+  {
+    "scenario": "resend_burst",
+    "description": "Network retry: the torque gateway re-sends 500 events it already delivered (same event ids).",
+    "expected": [
+      "resent_events"
+    ],
+    "fired": [
+      "resent_events"
+    ],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "500 re-sent events ignored by idempotent load"
+    ],
+    "seconds": 8.5
+  },
+  {
+    "scenario": "duplicate_new_ids",
+    "description": "A PLC restart replays an hour of station_in signals at C03 with freshly generated event ids.",
+    "expected": [
+      "duplicate_station_events"
+    ],
+    "fired": [
+      "duplicate_station_events"
+    ],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "51 vehicles reported more than once at C03"
+    ],
+    "seconds": 8.2
+  },
+  {
+    "scenario": "station_dropout",
+    "description": "C04's PLC stops sending between 12:00 and 13:00 while the line keeps running.",
+    "expected": [
+      "missing_station_records",
+      "station_silence"
+    ],
+    "fired": [
+      "missing_station_records",
+      "station_silence"
+    ],
+    "dbt_test_failures": [
+      "completed_vehicles_visit_every_station"
+    ],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "59 completed vehicles have no record at C04",
+      "C04 silent for 60.5 min while its neighbour handed over 60 vehicles"
+    ],
+    "seconds": 8.4
+  },
+  {
+    "scenario": "unit_change",
+    "description": "A torque tool at C05 gets new firmware at 14:00 and reports lbf\u00b7ft in the torque_nm field.",
+    "expected": [
+      "torque_level_shift"
+    ],
+    "fired": [
+      "torque_level_shift"
+    ],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "C05-J1 at 2026-11-16 14:00: median 0.73 \u00d7 target",
+      "C05-J1 at 2026-11-16 15:00: median 0.74 \u00d7 target",
+      "C05-J1 at 2026-11-16 16:00: median 0.74 \u00d7 target",
+      "C05-J1 at 2026-11-16 17:00: median 0.74 \u00d7 target",
+      "C05-J1 at 2026-11-16 18:00: median 0.74 \u00d7 target",
+      "... and 35 more torque_level_shift findings"
+    ],
+    "seconds": 8.3
+  },
+  {
+    "scenario": "schema_drift",
+    "description": "Firmware renames torque_nm to torque_value on C06's tool between 08:00 and 09:00.",
+    "expected": [
+      "contract_violations"
+    ],
+    "fired": [
+      "contract_violations"
+    ],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "240 records quarantined: torque_result: missing or invalid field torque_nm"
+    ],
+    "seconds": 8.0
+  },
+  {
+    "scenario": "late_arrival",
+    "description": "Files for 03:00-04:00 reach the landing zone six hours late",
+    "expected": [
+      "late_arrivals"
+    ],
+    "fired": [
+      "late_arrivals"
+    ],
+    "dbt_test_failures": [],
+    "detected": true,
+    "false_alarms": [],
+    "passed": true,
+    "summaries": [
+      "6051 events arrived late in batch 2 (oldest 2026-11-17 03:00); models rebuilt"
+    ],
+    "seconds": 8.5
+  }
+]
