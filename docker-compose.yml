@@ -1,0 +1,11 @@
+# Optional: run against a containerised PostgreSQL instead of the embedded one.
+#   docker compose up -d && export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
